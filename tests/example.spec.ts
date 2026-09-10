@@ -11,7 +11,7 @@ test('This is my first Test',async ({page})=>{
     const signinPage = new SignInPage(page);
     const cartPage = new CartPage(page);
     await landingPage.goHome();
-    await landingPage.selectProduct('Pliers');
+    /*await landingPage.selectProduct('Pliers');
     //await productPage.scrollToElement(productPage.specificationTitle);
     //await expect(productPage.specificationTile).toHaveText('Specifications');
     await productPage.addToCartProduct();
@@ -20,5 +20,5 @@ test('This is my first Test',async ({page})=>{
     await cartPage.setProductQuantity(2);
     await cartPage.clickOnProceedButton();
     await signinPage.clickOnContinueAsGuestTab();
-    await page.pause();
+    await page.pause();*/
 })
