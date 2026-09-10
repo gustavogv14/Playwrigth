@@ -12,7 +12,7 @@ test('This is my first Test',async ({page})=>{
     const cartPage = new CartPage(page);
     await landingPage.goHome();
     await landingPage.selectProduct('Pliers');
-    await productPage.scrollToElement(productPage.specificationTitle);
+    //await productPage.scrollToElement(productPage.specificationTitle);
     await expect(productPage.specificationTile).toHaveText('Specifications');
     await productPage.addToCartProduct();
     await productPage.scrollToElement(productPage.navCart);
