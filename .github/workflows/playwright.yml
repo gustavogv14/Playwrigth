@@ -1,26 +1,50 @@
-name: Playwright Tests
+
+name: Playwright Automation Tests
 on:
   push:
     branches: [ main, master ]
   pull_request:
     branches: [ main, master ]
+
 jobs:
   test:
     timeout-minutes: 60
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
-    - uses: actions/setup-node@v4
+    # 1. Clonar el repositorio usando versiones estables
+    - uses: actions/checkout@v4.2.2
+
+    # 2. Configurar Node con caché activa para acelerar la instalación
+    - uses: actions/setup-node@v4.1.0
       with:
         node-version: lts/*
+        cache: 'npm'
+
+    # 3. Instalar dependencias del proyecto
     - name: Install dependencies
       run: npm ci
+
+    # 4. Instalar los navegadores de Playwright
     - name: Install Playwright Browsers
       run: npx playwright install --with-deps
+
+    # 5. Ejecutar pruebas declarando cada reportero de forma independiente
     - name: Run Playwright tests
-      run: npx playwright test
-    - uses: actions/upload-artifact@v4
-      if: ${{ !cancelled() }}
+      run: npx playwright test --reporter=list --reporter=html --reporter=json:report.json
+      env:
+        CI: true
+        
+    # 6. CORREGIDO: Generar e incrustar el resumen visual usando una acción oficial y activa
+    - name: Generate Visual Report Summary
+      uses: daun/playwright-report-summary@v3
+      if: always() # Se ejecuta pase lo que pase con las pruebas
+      with:
+        report-file: report.json
+
+    # 7. Subir el reporte completo en HTML (capturas, videos y trazas)
+    - name: Upload Full HTML Report Artifact
+      uses: actions/upload-artifact@v4.4.3
+      if: ${{ !cancelled() }} # Asegura la subida incluso si las pruebas fallaron
       with:
         name: playwright-report
         path: playwright-report/
