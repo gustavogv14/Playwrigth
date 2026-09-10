@@ -27,7 +27,7 @@ export class BasePage {
     }
 
     async goHome(): Promise<void> {
-        this.page.goto("/", { waitUntil: 'domcontentloaded' });
+        await this.page.goto("/", { waitUntil: 'domcontentloaded' });
     }
 
     
