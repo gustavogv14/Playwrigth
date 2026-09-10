@@ -28,12 +28,12 @@ jobs:
     - name: Install Playwright Browsers
       run: npx playwright install --with-deps
 
-    # 5. Ejecutar pruebas generando reportes HTML, consola y el JSON intermedio
+    # 5. Ejecutar pruebas declarando cada reportero de forma independiente
     - name: Run Playwright tests
-      run: npx playwright test --reporter=html,list,json=report.json
+      run: npx playwright test --reporter=list --reporter=html --reporter=json:report.json
       env:
         CI: true
-
+        
     # 6. CORREGIDO: Generar e incrustar el resumen visual usando una acción oficial y activa
     - name: Generate Visual Report Summary
       uses: daun/playwright-report-summary@v3
