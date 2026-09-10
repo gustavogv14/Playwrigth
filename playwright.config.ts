@@ -5,6 +5,7 @@ dotenv.config({ path: ".env", quiet: true });
 export default defineConfig({
   testDir: "./tests",
   fullyParallel: true,
+  timeout: process.env.CI ? 60000 : 30000,
   forbidOnly: !!process.env.CI, // Prevent `test.only` in CI
   retries: process.env.CI ? 2 : 0, // Retry failed tests in CI
   workers: process.env.CI ? 1 : undefined, // Control parallel workers
