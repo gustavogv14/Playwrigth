@@ -9,7 +9,11 @@ export default defineConfig({
   forbidOnly: !!process.env.CI, // Prevent `test.only` in CI
   retries: process.env.CI ? 2 : 0, // Retry failed tests in CI
   workers: process.env.CI ? 1 : undefined, // Control parallel workers
-  reporter: [["html"], ["list"]], // Generate HTML and list reports
+  reporter: [
+    ['list'],                                     // Muestra progreso en consola
+    ['html', { open: 'never' }],                  // Genera la carpeta del reporte HTML
+    ['json', { outputFile: 'report.json' }]       // Genera el archivo JSON exacto para el resumen
+  ],
   use: {
     trace: "on", // Capture traces always for now
     baseURL: process.env.BASE_URL || "https://practicesoftwaretesting.com", // Base URL for navigation
